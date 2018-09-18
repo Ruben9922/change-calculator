@@ -31,7 +31,7 @@ namespace ChangeCalculator
             List<int> coinQtys = Enumerable.Repeat(0, coins.Count).ToList();
             while (currentRemainder >= smallestCoin)
             {
-                List<decimal> allowedCoins = coins.FindAll(coin => coin <= currentRemainder);
+                IEnumerable<decimal> allowedCoins = coins.Where(coin => coin <= currentRemainder);
                 decimal largestAllowedCoin = allowedCoins.Max();
 
                 int quotient = (int) Math.Floor(currentRemainder / largestAllowedCoin);
