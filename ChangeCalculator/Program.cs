@@ -33,9 +33,6 @@ namespace ChangeCalculator
                 decimal largestAllowedCoin = allowedCoins.Max();
                 int largestAllowedCoinIndex = coins.IndexOf(largestAllowedCoin);
                 
-                Console.WriteLine("r"+remainder);
-                Console.WriteLine("c"+largestAllowedCoin);
-
                 coinQtys[largestAllowedCoinIndex]++; // TODO: Possibly replace with objects
 
                 remainder -= largestAllowedCoin;
