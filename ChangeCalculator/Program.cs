@@ -10,8 +10,8 @@ namespace ChangeCalculator
     {
         private static void Main(string[] args)
         {
-            double amount = ConsoleUtilities.ReadDouble("Enter amount: ", 0);
-            List<double> coins = new List<double> {2, 1, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01};
+            decimal amount = ConsoleUtilities.ReadDecimal("Enter amount: ", 0);
+            List<decimal> coins = new List<decimal> {2, 1, 0.5m, 0.2m, 0.1m, 0.05m, 0.02m, 0.01m};
 
             List<int> coinQtys = ComputeChange(amount, coins);
 
@@ -19,15 +19,15 @@ namespace ChangeCalculator
             Console.Write(coins.Zip(coinQtys, (coin, coinQty) => coin + ": " + coinQty + "\n").Aggregate(new StringBuilder(), (sb, s) => sb.Append(s)));
         }
 
-        private static List<int> ComputeChange(double amount, List<double> coins)
+        private static List<int> ComputeChange(decimal amount, List<decimal> coins)
         {
-            double remainder = amount;
-            double smallestCoin = coins.Min();
+            decimal remainder = amount;
+            decimal smallestCoin = coins.Min();
             List<int> coinQtys = Enumerable.Repeat(0, coins.Count).ToList();
             while (remainder >= smallestCoin)
             {
-                List<double> allowedCoins = coins.FindAll(coin => coin <= remainder);
-                double largestAllowedCoin = allowedCoins.Max();
+                List<decimal> allowedCoins = coins.FindAll(coin => coin <= remainder);
+                decimal largestAllowedCoin = allowedCoins.Max();
                 int largestAllowedCoinIndex = coins.IndexOf(largestAllowedCoin);
                 
                 Console.WriteLine("r"+remainder);
