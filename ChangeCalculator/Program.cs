@@ -12,7 +12,7 @@ namespace ChangeCalculator
         {
             Console.WriteLine("Change Calculator");
             Console.WriteLine("-----------------");
-            
+
             decimal amount = ConsoleUtilities.ReadDecimal("Enter amount: ", 0);
             List<decimal> coins = new List<decimal> {2, 1, 0.5m, 0.2m, 0.1m, 0.05m, 0.02m, 0.01m};
 
@@ -33,11 +33,13 @@ namespace ChangeCalculator
             {
                 List<decimal> allowedCoins = coins.FindAll(coin => coin <= currentRemainder);
                 decimal largestAllowedCoin = allowedCoins.Max();
-                int largestAllowedCoinIndex = coins.IndexOf(largestAllowedCoin);
-                
-                coinQtys[largestAllowedCoinIndex]++; // TODO: Possibly replace with objects
 
-                currentRemainder -= largestAllowedCoin;
+                int quotient = (int) Math.Floor(currentRemainder / largestAllowedCoin);
+
+                int largestAllowedCoinIndex = coins.IndexOf(largestAllowedCoin);
+                coinQtys[largestAllowedCoinIndex] += quotient; // TODO: Possibly replace with objects
+
+                currentRemainder -= largestAllowedCoin * quotient;
             }
 
             remainder = currentRemainder;
