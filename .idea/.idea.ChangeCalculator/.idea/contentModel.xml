@@ -5,7 +5,6 @@
     <e p="$USER_HOME$/Library/Caches/Rider2018.2/resharper-host/local/Transient/ReSharperHost/v182/SolutionCaches/_ChangeCalculator.-838493711.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="ChangeCalculator" t="IncludeRecursive">
-        <e p=".gitignore" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="ChangeCalculator.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
