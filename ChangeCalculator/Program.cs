@@ -10,6 +10,9 @@ namespace ChangeCalculator
     {
         private static void Main(string[] args)
         {
+            Console.WriteLine("Change Calculator");
+            Console.WriteLine("-----------------");
+            
             decimal amount = ConsoleUtilities.ReadDecimal("Enter amount: ", 0);
             List<decimal> coins = new List<decimal> {2, 1, 0.5m, 0.2m, 0.1m, 0.05m, 0.02m, 0.01m};
 
