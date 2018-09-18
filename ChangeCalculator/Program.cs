@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MoreLinq;
 using RubenDougall.Utilities;
 
 namespace ChangeCalculator
@@ -14,36 +15,43 @@ namespace ChangeCalculator
             Console.WriteLine("-----------------");
 
             decimal amount = ConsoleUtilities.ReadDecimal("Enter amount: ", 0);
-            List<decimal> coins = new List<decimal> {2, 1, 0.5m, 0.2m, 0.1m, 0.05m, 0.02m, 0.01m};
+            List<Coin> coins = new List<Coin>
+            {
+                new Coin {Value = 2},
+                new Coin {Value = 1},
+                new Coin {Value = 0.5m},
+                new Coin {Value = 0.2m},
+                new Coin {Value = 0.1m},
+                new Coin {Value = 0.05m},
+                new Coin {Value = 0.02m},
+                new Coin {Value = 0.01m}
+            };
 
-            List<int> coinQtys = ComputeChange(amount, coins, out decimal remainder);
+            ComputeChange(amount, coins, out decimal remainder);
 
             Console.WriteLine();
-            Console.Write(coins.Zip(coinQtys, (coin, coinQty) => coin + ": " + coinQty + "\n").Aggregate(new StringBuilder(), (sb, s) => sb.Append(s)));
+            Console.Write(coins.Select(coin => coin.Value + ": " + coin.QtyUsed + "\n").Aggregate(new StringBuilder(), (sb, s) => sb.Append(s)));
             Console.WriteLine();
             Console.WriteLine("Remainder: " + remainder);
         }
 
-        private static List<int> ComputeChange(decimal amount, List<decimal> coins, out decimal remainder)
+        private static void ComputeChange(decimal amount, List<Coin> coins, out decimal remainder)
         {
             decimal currentRemainder = amount;
-            decimal smallestCoin = coins.Min();
-            List<int> coinQtys = Enumerable.Repeat(0, coins.Count).ToList();
-            while (currentRemainder >= smallestCoin)
+            Coin smallestCoin = coins.MinBy(coin => coin.Value).First();
+            while (currentRemainder >= smallestCoin.Value)
             {
-                IEnumerable<decimal> allowedCoins = coins.Where(coin => coin <= currentRemainder);
-                decimal largestAllowedCoin = allowedCoins.Max();
+                IEnumerable<Coin> allowedCoins = coins.Where(coin => coin.Value <= currentRemainder);
+                Coin largestAllowedCoin = allowedCoins.MaxBy(coin => coin.Value).First();
 
-                int quotient = (int) Math.Floor(currentRemainder / largestAllowedCoin);
+                int quotient = (int) Math.Floor(currentRemainder / largestAllowedCoin.Value);
 
-                int largestAllowedCoinIndex = coins.IndexOf(largestAllowedCoin);
-                coinQtys[largestAllowedCoinIndex] += quotient; // TODO: Possibly replace with objects
-
-                currentRemainder -= largestAllowedCoin * quotient;
+                largestAllowedCoin.QtyUsed += quotient;
+                
+                currentRemainder -= largestAllowedCoin.Value * quotient;
             }
 
             remainder = currentRemainder;
-            return coinQtys;
         }
     }
 }
