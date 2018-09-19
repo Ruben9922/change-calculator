@@ -8,7 +8,7 @@ using RubenDougall.Utilities;
 namespace ChangeCalculator
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    class Program
+    internal class Program
     {
         private static void Main(string[] args)
         {
